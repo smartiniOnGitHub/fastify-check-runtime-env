@@ -1,0 +1,48 @@
+{
+  "name": "fastify-check-runtime-env",
+  "version": "0.1.0",
+  "description": "Fastify Plugin to check runtime environment properties",
+  "main": "src/plugin",
+  "scripts": {
+    "dependency:log": "npm list > ./temp/dependencies.log",
+    "example": "node example/example",
+    "example-enhanced": "node example/example-enhanced",
+    "lint": "standard \"./*.js\" \"./src/**/*.js\" \"./test/**/*.test.js\" \"./example/**/*.js\"",
+    "test:unit": "tap -J --comments --strict test/*.test.js",
+    "test:unit:debug": "tap -T --node-arg=--inspect-brk --comments --strict test/*.test.js",
+    "test:coverage": "npm run test:unit -- --cov --coverage-report=html",
+    "test": "npm run lint && npm run test:unit"
+  },
+  "dependencies": {
+    "fastify-plugin": "^1.5.0",
+    "fast-json-stringify": "^1.15.2",
+    "check-runtime-env": "~0.1.0"
+  },
+  "devDependencies": {
+    "fastify": "^2.1.0",
+    "standard": "^12.0.1",
+    "tap": "^12.7.0"
+  },
+  "peerDependencies": {},
+  "engines": {
+    "node": ">=8.16.0"
+  },
+  "homepage": "https://github.com/smartiniOnGitHub/fastify-check-runtime-env#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smartiniOnGitHub/fastify-check-runtime-env.git"
+  },
+  "bugs": {
+    "url": "https://github.com/smartiniOnGitHub/fastify-check-runtime-env/issues"
+  },
+  "keywords": [
+    "fastify",
+    "plugin",
+    "check",
+    "ensure",
+    "runtime",
+    "environment"
+  ],
+  "author": "Sandro Martini <sandro.martini@gmail.com>",
+  "license": "Apache-2.0"
+}
