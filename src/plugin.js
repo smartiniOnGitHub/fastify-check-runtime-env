@@ -21,31 +21,37 @@ const CRE = require('check-runtime-env') // get Checkers definition and related 
 function fastifyCheckRuntimeEnv (fastify, options, next) {
   const {
     onNodeVersionMismatch = 'exception',
-    nodeVersionCheckAtStartup = true
-    // TODO: check if handle here even nodeVersion and nodeVersionExpected, with defaults ... wip
+    nodeVersionCheckAtStartup = false,
+    nodeVersion = process.version,
+    nodeVersionExpected = ''
   } = options
   ensureIsString(onNodeVersionMismatch, 'onNodeVersionMismatch')
   ensureIsBoolean(nodeVersionCheckAtStartup, 'nodeVersionCheckAtStartup')
+  ensureIsString(nodeVersion, 'nodeVersion')
+  // ensureIsString(nodeVersionExpected, 'nodeVersionExpected')
 
   // execute plugin code
   fastify.decorate('CheckRuntimeEnv', CRE)
 
+  let err = null
   if (nodeVersionCheckAtStartup === true) {
     try {
-      // TODO: check if this is enough (probably not) ... wip
-      CRE.checkVersionOfNode()
+      CRE.checkVersionOfNode(nodeVersion, nodeVersionExpected)
     } catch (e) {
+      err = e
       console.log(e) // TODO: temp ... wip
       switch (onNodeVersionMismatch) {
         case 'warning':
-          // TODO: use fastify log for a warning (or an error) ...
+          fastify.log.warn(e)
           break
         case 'exception':
-          throw e
+          // throw e
           // break // unreachable
+          // next(e) // TODO: check if right, and if/how to avoid last next call at bottom ... wip
+          break
         case 'exit':
-          // TODO: exit with a error code ... wip
-          break // temp ...
+          fastify.log.fatal(e)
+          process.exit(1)
           // break // unreachable
         default:
           throw new Error(`Illegal value for serverUrlMode: '${onNodeVersionMismatch}'`)
@@ -53,7 +59,7 @@ function fastifyCheckRuntimeEnv (fastify, options, next) {
     }
   }
 
-  next()
+  next(err)
 }
 
 function ensureIsString (arg, name) {
