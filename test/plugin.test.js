@@ -25,6 +25,9 @@ assert(nodeVersion !== null)
 const engines = require('../package.json').engines
 assert(engines !== null)
 
+const plugin = require('../src/plugin')
+assert(plugin !== null)
+
 test('ensure decorator functions (exposed by the plugin) exists', (t) => {
   t.plan(4)
   const fastify = Fastify()
@@ -67,4 +70,110 @@ test('ensure objects exported by index script, exists and are of the right type'
       assert(rec === null) // never executed
     }, Error, 'Expected exception when creating a RuntimeEnvChecker instance')
   })
+})
+
+test('ensure plugin instancing with node version check works well', (t) => {
+  t.plan(1)
+
+  const fastify = Fastify()
+  t.tearDown(fastify.close.bind(fastify))
+  /*
+  // TODO: cleanup test code ... wip
+  t.throws(function () {
+    fastify.register(plugin, {
+      nodeVersionCheckAtStartup: true
+    }) // configure this plugin with some custom options
+    assert(plugin !== null) // never executed
+  }, Error, 'Expected exception when registering the plugin with wrong options')
+   */
+  /*
+  // TODO: cleanup test code ... wip
+  try {
+    fastify.register(plugin, {
+      nodeVersionCheckAtStartup: true
+    }) // configure this plugin with some custom options
+    assert(plugin !== null) // never executed
+  } catch (e) {
+    t.error(e)
+  }
+   */
+  fastify.register(plugin, {
+    nodeVersionCheckAtStartup: true,
+    // TODO: try even without nodeVersionExpected ... wip
+    nodeVersionExpected: engines.node
+    // nodeVersionExpected: '>=16.0.0' // TODO: try even with a failure test ... wip
+  }) // configure this plugin with some custom options
+  assert(plugin !== null) // never executed
+
+  fastify.listen(0, (err) => {
+    t.error(err)
+    t.comment('testing RuntimeEnvChecker with node version check at startup')
+  })
+})
+
+test('ensure plugin instancing with node version check works well', (t) => {
+  t.plan(4)
+
+  const fastify = Fastify()
+  t.tearDown(fastify.close.bind(fastify))
+  // t.tearDown(fastify.close())
+
+  // TODO: check if/how to handle async errors here ... wip
+  /*
+  // t.throws(function () {
+  t.rejects(async function () {
+  // t.expectUncaughtException(async function () {
+    / *
+    try {
+      // await fastify.register(plugin, {
+      fastify.register(plugin, {
+        nodeVersionCheckAtStartup: true
+        // do not specify nodeVersionExpected, so exception expected
+      }) // configure this plugin with some custom options
+      assert(plugin !== null) // never executed
+    } catch (e) {
+      t.error(e)
+      t.comment('testing RuntimeEnvChecker with node version check at startup')
+      throw e
+    }
+     * /
+    await fastify.register(plugin, {
+      nodeVersionCheckAtStartup: true
+      // do not specify nodeVersionExpected, so exception expected
+    }) // configure this plugin with some custom options
+    assert(plugin !== null) // never executed
+
+    fastify.listen(0, (err) => {
+      t.error(err)
+      t.comment('testing RuntimeEnvChecker with node version check at startup')
+    })
+  }, Error, 'Expected exception when registering the plugin with wrong options')
+  // })
+   */
+  fastify.register(plugin, {
+    nodeVersionCheckAtStartup: true
+    // do not specify nodeVersionExpected, so exception expected
+  }) // configure this plugin with some custom options
+  // }).after((err) => {
+  fastify.after((err) => {
+    // t.comment('after: ' + err) // TODO: temp ...
+    // t.error(err)
+    t.ok(err)
+    t.strictEqual(typeof err, 'object')
+    t.strictEqual(err.message, `RuntimeEnvChecker - the string 'expectedVersion' must be not empty`)
+    // if (err) throw err
+    // t.comment('after: end') // TODO: temp ...
+  })
+  assert(plugin !== null) // never executed
+  // t.ok(plugin)
+
+  fastify.listen(0, (err) => {
+    // t.comment(('listen: ' + err)) // TODO: temp ...
+    t.error(err)
+    // t.ok(err)
+    t.comment('testing RuntimeEnvChecker with node version check at startup')
+    // if (err) t.threw(err)
+    // t.comment('listen: end') // TODO: temp ...
+  })
+  // t.end()
 })
