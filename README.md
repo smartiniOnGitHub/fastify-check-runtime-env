@@ -46,7 +46,7 @@ Plugin options are:
   but could be 'warning' (to log a message in Fastify logs), 
   or 'exit' (to stop current Node.js process)
 - `nodeVersionCheckAtStartup` flag to tell (when true) to check Node.js version 
-  at application startup; by default true
+  at application startup; by default false
 
 all plugin options are optional, and have a default value.
 
