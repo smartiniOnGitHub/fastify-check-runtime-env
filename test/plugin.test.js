@@ -89,7 +89,7 @@ test('ensure plugin instancing with node version check works well', (t) => {
   })
 })
 
-test('ensure plugin instancing with node version check works well', (t) => {
+test('ensure plugin instancing with node version check works well, to handle failure (missing mandatory parameter)', (t) => {
   t.plan(4)
 
   const fastify = Fastify()
@@ -111,6 +111,30 @@ test('ensure plugin instancing with node version check works well', (t) => {
   })
 })
 
-// nodeVersionExpected: '>=16.0.0' // TODO: try even with a failure test ... wip
+test('ensure plugin instancing with node version check works well, to handle failure (not satisfying version)', (t) => {
+  t.plan(6)
 
-// TODO: test even different values of onNodeVersionMismatch (at least 'warning' )... wip
+  const fastify = Fastify()
+  t.tearDown(fastify.close.bind(fastify))
+  fastify.register(plugin, {
+    nodeVersionCheckAtStartup: true,
+    // specify a nodeVersionExpected but not satisfied, so exception expected
+    nodeVersionExpected: '>=16.0.0'
+  }) // configure this plugin with some custom options
+  fastify.after((err) => {
+    t.ok(err)
+    t.strictEqual(typeof err, 'object')
+    t.ok(err.message)
+    // t.strictEqual(err.message, `RuntimeEnvChecker - found version 'v8.16.0', but expected version '>=16.0.0'`) // TODO: change with substring checks, because found version could change over time (of course) ... ok
+    t.ok(err.message.startsWith('RuntimeEnvChecker - found version'))
+    t.ok(err.message.endsWith(`expected version '>=16.0.0'`))
+  })
+  assert(plugin !== null) // never executed
+
+  fastify.listen(0, (err) => {
+    t.error(err)
+    t.comment('testing RuntimeEnvChecker with node version check at startup')
+  })
+})
+
+// TODO: test even different values of onNodeVersionMismatch (at least 'warning') for good and bad tests ... wip
