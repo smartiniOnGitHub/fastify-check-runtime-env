@@ -38,16 +38,13 @@ function fastifyCheckRuntimeEnv (fastify, options, next) {
     try {
       CRE.checkVersionOfNode(nodeVersion, nodeVersionExpected)
     } catch (e) {
-      err = e
-      console.log(e) // TODO: temp ... wip
+      // console.log(e)
       switch (onNodeVersionMismatch) {
         case 'warning':
           fastify.log.warn(e)
           break
         case 'exception':
-          // throw e
-          // break // unreachable
-          // next(e) // TODO: check if right, and if/how to avoid last next call at bottom ... wip
+          err = e // set the exception for the callback only here
           break
         case 'exit':
           fastify.log.fatal(e)
