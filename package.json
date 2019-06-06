@@ -6,6 +6,7 @@
   "scripts": {
     "dependency:log": "npm list > ./temp/dependencies.log",
     "example": "node example/example",
+    "example-failure": "node example/example-failure",
     "lint": "standard \"./*.js\" \"./src/**/*.js\" \"./test/**/*.test.js\" \"./example/**/*.js\"",
     "test:unit": "tap -J --comments --strict --no-esm test/*.test.js",
     "test:unit:debug": "tap -T --node-arg=--inspect-brk --comments --strict --no-esm test/*.test.js",

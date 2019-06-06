@@ -15,21 +15,27 @@
  */
 'use strict'
 
-const fastify = require('fastify')()
-
 const k = {
   protocol: 'http',
   address: '0.0.0.0',
-  port: 3000
+  port: 3000,
+  fastifyOptionsString: process.env.FASTIFY_OPTIONS || '{ "logger": { "level": "info" } }'
 }
 
-const engines = require('../package.json').engines
+const fastifyOptions = JSON.parse(k.fastifyOptionsString)
+const fastify = require('fastify')(fastifyOptions)
+
+// const nodeVersion = process.version
+// const engines = require('../package.json').engines
 
 // register plugin with some options (as a sample)
 fastify.register(require('../src/plugin'), {
   nodeVersionCheckAtStartup: true,
-  nodeVersionExpected: engines.node
+  // nodeVersionExpected: engines.node
+  nodeVersionExpected: '>=16.0.0', // sample failing test
+  // onNodeVersionMismatch: 'warning' // log a warning
   // onNodeVersionMismatch: 'exception' // throw an exception // same as default
+  onNodeVersionMismatch: 'exit' // exit the process
 })
 
 // example to handle a sample home request to serve a static page, optional here
