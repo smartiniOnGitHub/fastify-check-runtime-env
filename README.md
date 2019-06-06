@@ -15,16 +15,30 @@ on some properties available at runtime (for example at application startup).
 By default any checker method that doesn't satisfy its condition 
 will throw `Error`, but in some cases this is configurable via plugin options.
 
-For example, a common use case is to throw an exception at application startup, 
-if Node.js version is not compatible with the one set in `package.json`.
-
 Note that all Chechers features exposed here are in the the library [check-runtime-env](https://npmjs.org/package/check-runtime-env/).
+For Semantic Versioning checks, see [semver](https://npmjs.org/package/semver/).
 
 
 ## Usage
 
-TODO: ...
+A common use case is to throw an exception at application startup, 
+if Node.js version is not compatible with the one set in `package.json`.
 
+```js
+const fastify = require('fastify')()
+const engines = require('../package.json').engines
+
+// register plugin with some options
+fastify.register(require('fastify-check-runtime-env'), {
+  nodeVersionCheckAtStartup: true,
+  nodeVersionExpected: engines.node
+  // nodeVersionExpected: '>=16.0.0', // sample failing test
+  // onNodeVersionMismatch: 'exception' // throw an exception // same as default
+})
+
+fastify.listen(3000)
+// curl http://127.0.0.1:3000/ => returning the home page, if current Node.js versio in compatible with the expected one
+```
 
 In the [example](./example/) folder there are some simple server scripts 
 that uses the plugin (inline but it's the same using it from npm registry).
@@ -44,9 +58,11 @@ Plugin options are:
 - `onNodeVersionMismatch`, define what to do if Node.js version 
   does not match with the expected one; by default 'exception' to raise an Error, 
   but could be 'warning' (to log a message in Fastify logs), 
-  or 'exit' (to stop current Node.js process)
+  or 'exit' (to stop current Node.js process) with exit code 1
 - `nodeVersionCheckAtStartup` flag to tell (when true) to check Node.js version 
   at application startup; by default false
+- 'nodeVersion' the current Node.js version (by default 'process.version')
+- `nodeVersionExpected`, the semver string with the expected Node.js version (by default empty, so must be manually provided, for example reading 'package.json' attribute 'engines.node' if specified)
 
 all plugin options are optional, and have a default value.
 
