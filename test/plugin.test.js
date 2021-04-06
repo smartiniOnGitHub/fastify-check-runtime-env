@@ -45,7 +45,7 @@ test('ensure decorator functions (exposed by the plugin) exists', (t) => {
     assert(CRE !== null)
     assert(typeof CRE === 'function')
     t.ok(CRE)
-    t.strictEqual(typeof CRE, 'function')
+    t.equal(typeof CRE, 'function')
   })
 })
 
@@ -62,7 +62,7 @@ test('ensure objects exported by index script, exists and are of the right type'
     t.comment('testing RuntimeEnvChecker class')
     const REC = fastify.CheckRuntimeEnv
     t.ok(REC)
-    t.strictEqual(typeof REC, 'function')
+    t.equal(typeof REC, 'function')
     t.ok(engines)
 
     t.throws(function () {
@@ -102,8 +102,8 @@ test('ensure plugin instancing with node version check works well, to handle fai
   }) // configure this plugin with some custom options
   fastify.after((err) => {
     t.ok(err)
-    t.strictEqual(typeof err, 'object')
-    t.strictEqual(err.message, `RuntimeEnvChecker - the string 'expectedVersion' must be not empty`)
+    t.equal(typeof err, 'object')
+    t.equal(err.message, `RuntimeEnvChecker - the string 'expectedVersion' must be not empty`)
   })
   assert(plugin !== null) // to ensure execution flow is right here
 
@@ -126,7 +126,7 @@ test('ensure plugin instancing with node version check works well, to handle fai
   }) // configure this plugin with some custom options
   fastify.after((err) => {
     t.ok(err)
-    t.strictEqual(typeof err, 'object')
+    t.equal(typeof err, 'object')
     t.ok(err.message)
     t.ok(err.message.startsWith('RuntimeEnvChecker - found version'))
     t.ok(err.message.endsWith(`expected version '>=16.0.0'`))
