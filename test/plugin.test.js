@@ -31,7 +31,7 @@ assert(plugin !== null)
 test('ensure decorator functions (exposed by the plugin) exists', (t) => {
   t.plan(4)
   const fastify = Fastify()
-  t.tearDown(fastify.close.bind(fastify))
+  t.teardown(fastify.close.bind(fastify))
   fastify.register(require('../src/plugin')) // configure this plugin with its default options
 
   fastify.listen(0, (err) => {
@@ -53,7 +53,7 @@ test('ensure objects exported by index script, exists and are of the right type'
   t.plan(5)
 
   const fastify = Fastify()
-  t.tearDown(fastify.close.bind(fastify))
+  t.teardown(fastify.close.bind(fastify))
   fastify.register(require('../src/plugin')) // configure this plugin with its default options
 
   fastify.listen(0, (err) => {
@@ -77,7 +77,7 @@ test('ensure plugin instancing with node version check works well', (t) => {
 
   t.comment('testing RuntimeEnvChecker with node version check at startup')
   const fastify = Fastify()
-  t.tearDown(fastify.close.bind(fastify))
+  t.teardown(fastify.close.bind(fastify))
   fastify.register(plugin, {
     nodeVersionCheckAtStartup: true,
     nodeVersionExpected: engines.node
@@ -95,7 +95,7 @@ test('ensure plugin instancing with node version check works well, to handle fai
 
   t.comment('testing RuntimeEnvChecker with node version check at startup')
   const fastify = Fastify()
-  t.tearDown(fastify.close.bind(fastify))
+  t.teardown(fastify.close.bind(fastify))
   fastify.register(plugin, {
     nodeVersionCheckAtStartup: true
     // do not specify nodeVersionExpected, so exception expected
@@ -103,7 +103,7 @@ test('ensure plugin instancing with node version check works well, to handle fai
   fastify.after((err) => {
     t.ok(err)
     t.equal(typeof err, 'object')
-    t.equal(err.message, `RuntimeEnvChecker - the string 'expectedVersion' must be not empty`)
+    t.equal(err.message, 'RuntimeEnvChecker - the string \'expectedVersion\' must be not empty')
   })
   assert(plugin !== null) // to ensure execution flow is right here
 
@@ -118,7 +118,7 @@ test('ensure plugin instancing with node version check works well, to handle fai
 
   t.comment('testing RuntimeEnvChecker with node version check at startup')
   const fastify = Fastify()
-  t.tearDown(fastify.close.bind(fastify))
+  t.teardown(fastify.close.bind(fastify))
   fastify.register(plugin, {
     nodeVersionCheckAtStartup: true,
     // specify a nodeVersionExpected but not satisfied, so exception expected
@@ -129,7 +129,7 @@ test('ensure plugin instancing with node version check works well, to handle fai
     t.equal(typeof err, 'object')
     t.ok(err.message)
     t.ok(err.message.startsWith('RuntimeEnvChecker - found version'))
-    t.ok(err.message.endsWith(`expected version '>=16.0.0'`))
+    t.ok(err.message.endsWith('expected version \'>=16.0.0\''))
   })
   assert(plugin !== null) // to ensure execution flow is right here
 
@@ -143,7 +143,7 @@ test('ensure plugin instancing with node version check (but warnings as outcome)
   t.plan(4)
 
   const fastify = Fastify()
-  t.tearDown(fastify.close.bind(fastify))
+  t.teardown(fastify.close.bind(fastify))
 
   t.comment('testing RuntimeEnvChecker with node version check at startup')
   fastify.register(plugin, {
@@ -169,7 +169,7 @@ test('ensure plugin instancing with node version check (but warnings as outcome)
   t.plan(3)
 
   const fastify = Fastify()
-  t.tearDown(fastify.close.bind(fastify))
+  t.teardown(fastify.close.bind(fastify))
 
   t.comment('testing RuntimeEnvChecker with node version check at startup')
   fastify.register(plugin, {
