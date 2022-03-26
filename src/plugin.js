@@ -42,21 +42,7 @@ function fastifyCheckRuntimeEnv (fastify, options, next) {
       CRE.checkStrictMode()
       // CRE.checkBoolean(false) // test
     } catch (e) {
-      // console.log(e)
-      switch (onCheckMismatch) {
-        case 'warning':
-          fastify.log.warn(e)
-          break
-        case 'exception':
-          err = e // set the exception for the callback only here
-          break
-        case 'exit':
-          fastify.log.fatal(e)
-          process.exit(1)
-          // break // unreachable
-        default:
-          throw new Error(`Illegal value for onCheckMismatch: '${onCheckMismatch}'`)
-      }
+      err = handleMismatch(e, fastify, onCheckMismatch)
     }
   }
 
@@ -64,21 +50,7 @@ function fastifyCheckRuntimeEnv (fastify, options, next) {
     try {
       CRE.checkVersionOfNode(nodeVersion, nodeVersionExpected)
     } catch (e) {
-      // console.log(e)
-      switch (onCheckMismatch) {
-        case 'warning':
-          fastify.log.warn(e)
-          break
-        case 'exception':
-          err = e // set the exception for the callback only here
-          break
-        case 'exit':
-          fastify.log.fatal(e)
-          process.exit(1)
-          // break // unreachable
-        default:
-          throw new Error(`Illegal value for onCheckMismatch: '${onCheckMismatch}'`)
-      }
+      err = handleMismatch(e, fastify, onCheckMismatch)
     }
   }
 
@@ -94,6 +66,24 @@ function ensureIsString (arg, name) {
 function ensureIsBoolean (arg, name) {
   if (arg !== null && typeof arg !== 'boolean') {
     throw new TypeError(`The argument '${name}' must be a boolean, instead got a '${typeof arg}'`)
+  }
+}
+
+function handleMismatch (e, fastify, mismatchMode) {
+  // console.log(e)
+  switch (mismatchMode) {
+    case 'warning':
+      fastify.log.warn(e)
+      break
+    case 'exception':
+      return e // set the exception for the callback only here
+      // break // unreachable
+    case 'exit':
+      fastify.log.fatal(e)
+      process.exit(1)
+      // break // unreachable
+    default:
+      throw new Error(`Illegal value for onCheckMismatch: '${mismatchMode}'`)
   }
 }
 
