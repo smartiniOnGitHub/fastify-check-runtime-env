@@ -45,6 +45,7 @@ test('ensure decorator functions (exposed by the plugin) exists', (t) => {
     assert(typeof CRE === 'function')
     t.ok(CRE)
     t.equal(typeof CRE, 'function')
+
     t.end()
   })
 })
@@ -67,6 +68,7 @@ test('ensure objects exported by index script, exists and are of the right type'
       const rec = new REC()
       assert(rec === null) // never executed
     }, Error, 'Expected exception when creating a RuntimeEnvChecker instance')
+
     t.end()
   })
 })
@@ -184,6 +186,23 @@ test('ensure plugin instancing with node version check (but warnings as outcome)
     // t.ok(CRE)
     const compatible = CRE.isVersionCompatible(nodeVersion, '<=8.17.0 >=200.0.0')
     t.strictSame(compatible, false)
+
+    // additional tests, to show generic boolean checker usage
+    t.throws(function () {
+      const checkCompatible = CRE.checkBoolean(compatible)
+      assert(checkCompatible === false) // never executed
+    }, Error, 'Expected exception when checking a false boolean value/condition')
+
+    // check strict mode
+    // long way
+    const safe = CRE.isStrictMode()
+    t.ok(safe)
+    t.equal(safe, true)
+    const ensureSafeMode = CRE.checkBoolean(safe)
+    t.ok(ensureSafeMode)
+    // short way
+    const checkSafeMode = CRE.checkStrictMode()
+    t.ok(checkSafeMode)
 
     t.end()
   })
