@@ -20,26 +20,30 @@ const CRE = require('check-runtime-env') // get Checkers definition and related 
 
 function fastifyCheckRuntimeEnv (fastify, options, next) {
   const {
-    onNodeVersionMismatch = 'exception',
+    onCheckMismatch = 'exception',
+    nodeStrictCheckAtStartup = true,
     nodeVersionCheckAtStartup = false,
     nodeVersion = process.version,
     nodeVersionExpected = ''
   } = options
-  ensureIsString(onNodeVersionMismatch, 'onNodeVersionMismatch')
+  ensureIsString(onCheckMismatch, 'onCheckMismatch')
+  ensureIsBoolean(nodeStrictCheckAtStartup, 'nodeStrictCheckAtStartup')
   ensureIsBoolean(nodeVersionCheckAtStartup, 'nodeVersionCheckAtStartup')
   ensureIsString(nodeVersion, 'nodeVersion')
-  // ensureIsString(nodeVersionExpected, 'nodeVersionExpected')
+  ensureIsString(nodeVersionExpected, 'nodeVersionExpected')
 
   // execute plugin code
   fastify.decorate('CheckRuntimeEnv', CRE)
 
   let err = null
-  if (nodeVersionCheckAtStartup === true) {
+
+  if (nodeStrictCheckAtStartup === true) {
     try {
-      CRE.checkVersionOfNode(nodeVersion, nodeVersionExpected)
+      CRE.checkStrictMode()
+      // CRE.checkBoolean(false) // test
     } catch (e) {
       // console.log(e)
-      switch (onNodeVersionMismatch) {
+      switch (onCheckMismatch) {
         case 'warning':
           fastify.log.warn(e)
           break
@@ -51,7 +55,29 @@ function fastifyCheckRuntimeEnv (fastify, options, next) {
           process.exit(1)
           // break // unreachable
         default:
-          throw new Error(`Illegal value for serverUrlMode: '${onNodeVersionMismatch}'`)
+          throw new Error(`Illegal value for onCheckMismatch: '${onCheckMismatch}'`)
+      }
+    }
+  }
+
+  if (nodeVersionCheckAtStartup === true) {
+    try {
+      CRE.checkVersionOfNode(nodeVersion, nodeVersionExpected)
+    } catch (e) {
+      // console.log(e)
+      switch (onCheckMismatch) {
+        case 'warning':
+          fastify.log.warn(e)
+          break
+        case 'exception':
+          err = e // set the exception for the callback only here
+          break
+        case 'exit':
+          fastify.log.fatal(e)
+          process.exit(1)
+          // break // unreachable
+        default:
+          throw new Error(`Illegal value for onCheckMismatch: '${onCheckMismatch}'`)
       }
     }
   }

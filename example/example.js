@@ -27,9 +27,10 @@ const engines = require('../package.json').engines
 
 // register plugin with some options (as a sample)
 fastify.register(require('../src/plugin'), {
+  // nodeStrictCheckAtStartup: true, // same as default
   nodeVersionCheckAtStartup: true,
   nodeVersionExpected: engines.node
-  // onNodeVersionMismatch: 'exception' // throw an exception // same as default
+  // onCheckMismatch: 'exception' // throw an exception // same as default
 })
 
 // example to handle a sample home request to serve a static page, optional here

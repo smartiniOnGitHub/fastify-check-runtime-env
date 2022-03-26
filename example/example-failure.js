@@ -30,12 +30,13 @@ const fastify = require('fastify')(fastifyOptions)
 
 // register plugin with some options (as a sample)
 fastify.register(require('../src/plugin'), {
+  // nodeStrictCheckAtStartup: true, // same as default
   nodeVersionCheckAtStartup: true,
   // nodeVersionExpected: engines.node
   nodeVersionExpected: '<=8.17.0 >=200.0.0', // sample failing test
-  // onNodeVersionMismatch: 'warning' // log a warning
-  // onNodeVersionMismatch: 'exception' // throw an exception // same as default
-  onNodeVersionMismatch: 'exit' // exit the process
+  // onCheckMismatch: 'warning' // log a warning
+  // onCheckMismatch: 'exception' // throw an exception // same as default
+  onCheckMismatch: 'exit' // exit the process
 })
 
 // example to handle a sample home request to serve a static page, optional here

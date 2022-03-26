@@ -141,9 +141,10 @@ test('ensure plugin instancing with node version check (but warnings as outcome)
 
   t.comment('testing RuntimeEnvChecker with node version check at startup')
   fastify.register(plugin, {
+    nodeStrictCheckAtStartup: true, // same as default
     nodeVersionCheckAtStartup: true,
     nodeVersionExpected: engines.node,
-    onNodeVersionMismatch: 'warning' // log a warning
+    onCheckMismatch: 'warning' // log a warning
   }) // configure this plugin with some custom options
   assert(plugin !== null) // to ensure execution flow is right here
 
@@ -167,9 +168,10 @@ test('ensure plugin instancing with node version check (but warnings as outcome)
 
   t.comment('testing RuntimeEnvChecker with node version check at startup')
   fastify.register(plugin, {
+    nodeStrictCheckAtStartup: true, // same as default
     nodeVersionCheckAtStartup: true,
     nodeVersionExpected: '<=8.17.0 >=200.0.0',
-    onNodeVersionMismatch: 'warning' // log a warning
+    onCheckMismatch: 'warning' // log a warning
   }) // configure this plugin with some custom options
   assert(plugin !== null) // to ensure execution flow is right here
 

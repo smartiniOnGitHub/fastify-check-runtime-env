@@ -30,10 +30,11 @@ const engines = require('../package.json').engines
 
 // register plugin with some options
 fastify.register(require('fastify-check-runtime-env'), {
+  // nodeStrictCheckAtStartup: true, // same as default
   nodeVersionCheckAtStartup: true,
   nodeVersionExpected: engines.node
-  // nodeVersionExpected: '>=16.0.0', // sample failing test
-  // onNodeVersionMismatch: 'exception' // throw an exception // same as default
+  // nodeVersionExpected: '<=8.17.0 >=200.0.0', // sample failing test
+  // onCheckMismatch: 'exception' // throw an exception // same as default
 })
 
 fastify.listen(3000)
@@ -57,11 +58,15 @@ The plugin decorate Fastify and expose some functions:
 - `CheckRuntimeEnv`, the checkers implementation, as a class (RuntimeEnvChecker)
 
 Plugin options are:
-- `onNodeVersionMismatch`, define what to do if Node.js version 
-  does not match with the expected one; by default 'exception' to raise an Error, 
+- `onCheckMismatch`, define what to do if a checker fails (Node.js version 
+  does not match with the expected one, JavaScript not in strict mode, etc); 
+  by default 'exception' to raise an Error, 
   but could be 'warning' (to log a message in Fastify logs), 
   or 'exit' (to stop current Node.js process) with exit code 1
-- `nodeVersionCheckAtStartup` flag to tell (when true) to check Node.js version 
+- `nodeStrictCheckAtStartup`, flag to tell (when true) to check JavaScript 
+  strict mode; by default true (safer and already enforced as default mode 
+  in modern JavaScript code using classes, ES Modules, etc)
+- `nodeVersionCheckAtStartup`, flag to tell (when true) to check Node.js version 
   at application startup; by default false
 - 'nodeVersion' the current Node.js version (by default 'process.version')
 - `nodeVersionExpected`, the semver string with the expected Node.js version (by default empty, so must be manually provided, for example reading 'package.json' attribute 'engines.node' if specified)
