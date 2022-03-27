@@ -55,7 +55,9 @@ Note that plugin releases 0.x are for Fastify 2.x, 3.x are for Fastify 3.x, etc.
 ## Note
 
 The plugin decorate Fastify and expose some functions:
-- `CheckRuntimeEnv`, the checkers implementation, as a class (RuntimeEnvChecker)
+- `CheckRuntimeEnv`, the checkers implementation, as a class (RuntimeEnvChecker); 
+  but note that to use it you need to wait for this plugin to be 
+  fully loaded and initialized
 
 Plugin options are:
 - `onCheckMismatch`, define what to do if a checker fails (Node.js version 

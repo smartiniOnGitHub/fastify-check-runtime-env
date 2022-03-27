@@ -48,6 +48,10 @@ fastify.listen(k.port, k.address, (err, address) => {
 })
 
 fastify.ready(() => {
+  // sample checker usage
+  const CRE = fastify.CheckRuntimeEnv
+  CRE.checkBoolean(true, 'sample checker usage')
+
   const routes = fastify.printRoutes()
   console.log(`Available Routes:\n${routes}`)
 })
