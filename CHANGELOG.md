@@ -1,13 +1,15 @@
 # Change Log
 
-## [0.2.0](https://github.com/smartiniOnGitHub/fastify-check-runtime-env/releases/tag/0.2.0) (unreleased)
+## [0.2.0](https://github.com/smartiniOnGitHub/fastify-check-runtime-env/releases/tag/0.2.0) (2022-03-27)
 Summary Changelog:
 - Update dependencies, but keep compatibility with Fastify 2.x (and Node.js 8 LTS)
 - Use 'check-runtime-env' latest release ('~0.3.0') with new features
 - Use Node.js assertions but in strict mode now
 - Ensure all works again
-- Featute: add new plugin option 'nodeStrictCheckAtStartup' 
-  to check if JavaScript is in strict mode, by default true
+- Feature: add new plugin option 'nodeStrictCheckAtStartup' 
+  to check if JavaScript is in strict mode (by default true) 
+  otherwise an exception will be raised at plugin startup 
+  (safer option, to be sure to use modern code/settings)
 - Breaking Change: rename plugin option 'onNodeVersionMismatch' 
   into 'onCheckMismatch'; now this setting defines the behavior for checker 
   failures on 'nodeStrictCheckAtStartup' and 'nodeVersionCheckAtStartup' options
