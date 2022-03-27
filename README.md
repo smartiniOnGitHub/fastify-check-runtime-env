@@ -33,7 +33,7 @@ fastify.register(require('fastify-check-runtime-env'), {
   // nodeStrictCheckAtStartup: true, // same as default
   nodeVersionCheckAtStartup: true,
   nodeVersionExpected: engines.node
-  // nodeVersionExpected: '<=8.17.0 >=200.0.0', // sample failing test
+  // nodeVersionExpected: '<=10.13.0 >=200.0.0', // sample failing test
   // onCheckMismatch: 'exception' // throw an exception // same as default
 })
 
@@ -47,7 +47,7 @@ that uses the plugin (inline but it's the same using it from npm registry).
 
 ## Requirements
 
-Fastify ^2.12.0 , Node.js 8 LTS (8.9.x) or later.
+Fastify ^3.3.0 , Node.js 10 LTS (10.13.0) or later.
 
 Note that plugin releases 0.x are for Fastify 2.x, 3.x are for Fastify 3.x, etc.
 

@@ -1,5 +1,11 @@
 # Change Log
 
+## [3.0.0](https://github.com/smartiniOnGitHub/fastify-check-runtime-env/releases/tag/3.0.0) (unreleased)
+Summary Changelog:
+- Update dependencies to Fastify 3.x (and Node.js 10 LTS)
+- Use 'check-runtime-env' latest release ('~0.3.0') with new features
+- Ensure all works again
+
 ## [0.2.0](https://github.com/smartiniOnGitHub/fastify-check-runtime-env/releases/tag/0.2.0) (2022-03-27)
 Summary Changelog:
 - Update dependencies, but keep compatibility with Fastify 2.x (and Node.js 8 LTS)
