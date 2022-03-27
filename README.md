@@ -52,6 +52,15 @@ Fastify ^3.3.0 , Node.js 10 LTS (10.13.0) or later.
 Note that plugin releases 0.x are for Fastify 2.x, 3.x are for Fastify 3.x, etc.
 
 
+## Sources
+
+Source code is all inside main repo:
+[fastify-check-runtime-env](https://github.com/smartiniOnGitHub/fastify-check-runtime-env).
+
+Documentation generated from source code (library API):
+[here](https://smartiniongithub.github.io/fastify-check-runtime-env/).
+
+
 ## Note
 
 The plugin decorate Fastify and expose some functions:
