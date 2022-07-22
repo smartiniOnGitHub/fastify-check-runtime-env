@@ -1,6 +1,6 @@
 # Change Log
 
-## [4.0.0](https://github.com/smartiniOnGitHub/fastify-healthcheck/releases/tag/4.0.0) (unreleased)
+## [4.0.0](https://github.com/smartiniOnGitHub/fastify-healthcheck/releases/tag/4.0.0) (2022-07-22)
 [Full Changelog](https://github.com/smartiniOnGitHub/fastify-healthcheck/compare/3.0.0...4.0.0)
 Summary Changelog:
 - Updated requirements to Fastify '^4.0.0' and Fastify-plugin '^4.0.0'; 
