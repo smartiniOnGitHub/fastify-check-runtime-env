@@ -3,7 +3,6 @@
   [![NPM Version](https://img.shields.io/npm/v/fastify-check-runtime-env.svg?style=flat)](https://npmjs.org/package/fastify-check-runtime-env/)
   [![NPM Downloads](https://img.shields.io/npm/dm/fastify-check-runtime-env.svg?style=flat)](https://npmjs.org/package/fastify-check-runtime-env/)
   [![Code Style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/)
-  [![Coverage Status](https://coveralls.io/repos/github/smartiniOnGitHub/fastify-check-runtime-env/badge.svg?branch=master)](https://coveralls.io/github/smartiniOnGitHub/fastify-check-runtime-env/?branch=master)
   [![license - APACHE-2.0](https://img.shields.io/npm/l/check-runtime-env.svg)](http://opensource.org/licenses/APACHE-2.0)
 
 Fastify Plugin to check runtime environment properties
@@ -46,9 +45,9 @@ that uses the plugin (inline but it's the same using it from npm registry).
 
 ## Requirements
 
-Fastify ^3.3.0 , Node.js 10 LTS (10.13.0) or later.
-
-Note that plugin releases 0.x are for Fastify 2.x, 3.x are for Fastify 3.x, etc.
+Fastify ^4.0.1 , Node.js 14 LTS (14.15.0) or later.
+Note that plugin releases 3.x are for Fastify 3.x, 4.x are for Fastify 4.x, etc.
+Old plugin releases (0.x) are for Fastify 2.x but are now obsolete.
 
 
 ## Sources

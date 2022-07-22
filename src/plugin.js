@@ -15,6 +15,8 @@
  */
 'use strict'
 
+/* eslint no-fallthrough: "off" */
+
 const fp = require('fastify-plugin')
 const CRE = require('check-runtime-env') // get Checkers definition and related utilities
 
@@ -88,6 +90,6 @@ function handleMismatch (e, fastify, mismatchMode) {
 }
 
 module.exports = fp(fastifyCheckRuntimeEnv, {
-  fastify: '^3.3.0',
+  fastify: '4.x',
   name: 'fastify-check-runtime-env'
 })

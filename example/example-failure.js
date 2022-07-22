@@ -33,7 +33,7 @@ fastify.register(require('../src/plugin'), {
   // nodeStrictCheckAtStartup: true, // same as default
   nodeVersionCheckAtStartup: true,
   // nodeVersionExpected: engines.node
-  nodeVersionExpected: '<=10.13.0 >=200.0.0', // sample failing test
+  nodeVersionExpected: '<=14.15.0 >=200.0.0', // sample failing test
   // onCheckMismatch: 'warning' // log a warning
   // onCheckMismatch: 'exception' // throw an exception // same as default
   onCheckMismatch: 'exit' // exit the process
@@ -48,9 +48,9 @@ fastify.get('/', function (req, reply) {
   reply.type('text/html; charset=utf-8').send(stream)
 })
 
-fastify.listen(k.port, k.address, (err, address) => {
+fastify.listen({ port: k.port, host: k.address }, (err, address) => {
   if (err) throw err
-  console.log(`Server listening on ${address}`)
+  console.log(`Server listening on '${address}' ...`)
 })
 
 fastify.ready(() => {

@@ -1,5 +1,15 @@
 # Change Log
 
+## [4.0.0](https://github.com/smartiniOnGitHub/fastify-healthcheck/releases/tag/4.0.0) (unreleased)
+[Full Changelog](https://github.com/smartiniOnGitHub/fastify-healthcheck/compare/3.0.0...4.0.0)
+Summary Changelog:
+- Updated requirements to Fastify '^4.0.0' and Fastify-plugin '^4.0.0'; 
+  update code with related changes
+- Updated all dependencies to latest (for Node.js 14 LTS)
+- Use 'check-runtime-env' latest release ('~0.4.0') with new features
+- Update and simplified example and test code
+- Update documentation from sources with JSDoc
+
 ## [3.0.0](https://github.com/smartiniOnGitHub/fastify-check-runtime-env/releases/tag/3.0.0) (2022-03-27)
 Summary Changelog:
 - Update dependencies to Fastify 3.x (and Node.js 10 LTS)

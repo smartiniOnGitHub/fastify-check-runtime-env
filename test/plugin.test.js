@@ -30,10 +30,10 @@ assert(plugin !== null)
 
 test('ensure decorator functions (exposed by the plugin) exists', (t) => {
   const fastify = Fastify()
-  t.teardown(fastify.close.bind(fastify))
+  t.teardown(() => { fastify.close() })
   fastify.register(require('../src/plugin')) // configure this plugin with its default options
 
-  fastify.listen(0, (err) => {
+  fastify.listen({ port: 0 }, (err, address) => {
     t.error(err)
 
     t.comment('testing decorators')
@@ -52,10 +52,10 @@ test('ensure decorator functions (exposed by the plugin) exists', (t) => {
 
 test('ensure objects exported by index script, exists and are of the right type', (t) => {
   const fastify = Fastify()
-  t.teardown(fastify.close.bind(fastify))
+  t.teardown(() => { fastify.close() })
   fastify.register(require('../src/plugin')) // configure this plugin with its default options
 
-  fastify.listen(0, (err) => {
+  fastify.listen({ port: 0 }, (err, address) => {
     t.error(err)
 
     t.comment('testing RuntimeEnvChecker class')
@@ -76,14 +76,14 @@ test('ensure objects exported by index script, exists and are of the right type'
 test('ensure plugin instancing with node version check works well', (t) => {
   t.comment('testing RuntimeEnvChecker with node version check at startup')
   const fastify = Fastify()
-  t.teardown(fastify.close.bind(fastify))
+  t.teardown(() => { fastify.close() })
   fastify.register(plugin, {
     nodeVersionCheckAtStartup: true,
     nodeVersionExpected: engines.node
   }) // configure this plugin with some custom options
   assert(plugin !== null) // to ensure execution flow is right here
 
-  fastify.listen(0, (err) => {
+  fastify.listen({ port: 0 }, (err, address) => {
     t.error(err)
     t.ok(!err)
     t.end()
@@ -93,7 +93,7 @@ test('ensure plugin instancing with node version check works well', (t) => {
 test('ensure plugin instancing with node version check works well, to handle failure (missing mandatory parameter)', (t) => {
   t.comment('testing RuntimeEnvChecker with node version check at startup')
   const fastify = Fastify()
-  t.teardown(fastify.close.bind(fastify))
+  t.teardown(() => { fastify.close() })
   fastify.register(plugin, {
     nodeVersionCheckAtStartup: true
     // do not specify nodeVersionExpected, so exception expected
@@ -105,7 +105,7 @@ test('ensure plugin instancing with node version check works well, to handle fai
   })
   assert(plugin !== null) // to ensure execution flow is right here
 
-  fastify.listen(0, (err) => {
+  fastify.listen({ port: 0 }, (err, address) => {
     t.error(err)
     t.ok(!err)
     t.end()
@@ -115,22 +115,22 @@ test('ensure plugin instancing with node version check works well, to handle fai
 test('ensure plugin instancing with node version check works well, to handle failure (not satisfying version)', (t) => {
   t.comment('testing RuntimeEnvChecker with node version check at startup')
   const fastify = Fastify()
-  t.teardown(fastify.close.bind(fastify))
+  t.teardown(() => { fastify.close() })
   fastify.register(plugin, {
     nodeVersionCheckAtStartup: true,
     // specify a nodeVersionExpected but not satisfied, so exception expected
-    nodeVersionExpected: '<=10.13.0 >=200.0.0'
+    nodeVersionExpected: '<=14.15.0 >=200.0.0'
   }) // configure this plugin with some custom options
   fastify.after((err) => {
     t.ok(err)
     t.equal(typeof err, 'object')
     t.ok(err.message)
     t.ok(err.message.startsWith('RuntimeEnvChecker - found version'))
-    t.ok(err.message.endsWith('expected version \'<=10.13.0 >=200.0.0\''))
+    t.ok(err.message.endsWith('expected version \'<=14.15.0 >=200.0.0\''))
   })
   assert(plugin !== null) // to ensure execution flow is right here
 
-  fastify.listen(0, (err) => {
+  fastify.listen({ port: 0 }, (err, address) => {
     t.error(err)
     t.ok(!err)
     t.end()
@@ -139,7 +139,7 @@ test('ensure plugin instancing with node version check works well, to handle fai
 
 test('ensure plugin instancing with node version check (but warnings as outcome), works well', (t) => {
   const fastify = Fastify()
-  t.teardown(fastify.close.bind(fastify))
+  t.teardown(() => { fastify.close() })
 
   t.comment('testing RuntimeEnvChecker with node version check at startup')
   fastify.register(plugin, {
@@ -150,7 +150,7 @@ test('ensure plugin instancing with node version check (but warnings as outcome)
   }) // configure this plugin with some custom options
   assert(plugin !== null) // to ensure execution flow is right here
 
-  fastify.listen(0, (err) => {
+  fastify.listen({ port: 0 }, (err, address) => {
     t.error(err)
     t.ok(!err)
 
@@ -166,25 +166,25 @@ test('ensure plugin instancing with node version check (but warnings as outcome)
 
 test('ensure plugin instancing with node version check (but warnings as outcome), works well, to handle failure (not satisfying version) without exception', (t) => {
   const fastify = Fastify()
-  t.teardown(fastify.close.bind(fastify))
+  t.teardown(() => { fastify.close() })
 
   t.comment('testing RuntimeEnvChecker with node version check at startup')
   fastify.register(plugin, {
     nodeStrictCheckAtStartup: true, // same as default
     nodeVersionCheckAtStartup: true,
-    nodeVersionExpected: '<=10.13.0 >=200.0.0',
+    nodeVersionExpected: '<=14.15.0 >=200.0.0',
     onCheckMismatch: 'warning' // log a warning
   }) // configure this plugin with some custom options
   assert(plugin !== null) // to ensure execution flow is right here
 
-  fastify.listen(0, (err) => {
+  fastify.listen({ port: 0 }, (err, address) => {
     t.error(err)
     t.ok(!err)
 
     t.comment('testing RuntimeEnvChecker (inner) feature that return a boolean')
     const CRE = fastify.CheckRuntimeEnv
     // t.ok(CRE)
-    const compatible = CRE.isVersionCompatible(nodeVersion, '<=10.13.0 >=200.0.0')
+    const compatible = CRE.isVersionCompatible(nodeVersion, '<=14.15.0 >=200.0.0')
     t.strictSame(compatible, false)
 
     // additional tests, to show generic boolean checker usage

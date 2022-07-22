@@ -42,9 +42,9 @@ fastify.get('/', function (req, reply) {
   reply.type('text/html; charset=utf-8').send(stream)
 })
 
-fastify.listen(k.port, k.address, (err, address) => {
+fastify.listen({ port: k.port, host: k.address }, (err, address) => {
   if (err) throw err
-  console.log(`Server listening on ${address}`)
+  console.log(`Server listening on '${address}' ...`)
 })
 
 fastify.ready(() => {
