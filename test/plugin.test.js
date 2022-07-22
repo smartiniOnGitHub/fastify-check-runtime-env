@@ -204,6 +204,18 @@ test('ensure plugin instancing with node version check (but warnings as outcome)
     const checkSafeMode = CRE.checkStrictMode()
     t.ok(checkSafeMode)
 
+    // additional tests, to test ESModule detection/checker
+    const isESModuleThisSource = CRE.isESModule(__filename)
+    t.notOk(isESModuleThisSource)
+    const isESModuleThisProject = CRE.isESModule(null, __dirname)
+    t.notOk(isESModuleThisProject)
+    const isESModuleThisSourceOrThisProject = CRE.isESModule(__filename, __dirname)
+    t.notOk(isESModuleThisSourceOrThisProject)
+    t.throws(function () {
+      const ensureIsESMod = CRE.checkESModule(__filename, __dirname)
+      assert(ensureIsESMod === true) // never executed, but false anyway
+    }, Error, 'Expected exception when checking for ES Module on a non-esm source/folder')
+
     t.end()
   })
 })
