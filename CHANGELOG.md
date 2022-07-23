@@ -1,5 +1,10 @@
 # Change Log
 
+## [4.0.1](https://github.com/smartiniOnGitHub/fastify-check-runtime-env/releases/tag/4.0.1) (2022-07-23)
+[Full Changelog](https://github.com/smartiniOnGitHub/fastify-check-runtime-env/compare/4.0.0...4.0.1)
+Summary Changelog:
+- Fix links in the CHANGELOG 
+
 ## [4.0.0](https://github.com/smartiniOnGitHub/fastify-check-runtime-env/releases/tag/4.0.0) (2022-07-22)
 [Full Changelog](https://github.com/smartiniOnGitHub/fastify-check-runtime-env/compare/3.0.0...4.0.0)
 Summary Changelog:
