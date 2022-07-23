@@ -1,6 +1,6 @@
 {
   "name": "fastify-check-runtime-env",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Fastify Plugin to check runtime environment properties",
   "main": "src/plugin",
   "scripts": {
