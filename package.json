@@ -1,9 +1,10 @@
 {
   "name": "fastify-check-runtime-env",
-  "version": "4.0.1",
+  "version": "5.0.0",
   "description": "Fastify Plugin to check runtime environment properties",
   "main": "src/plugin",
   "scripts": {
+    "audit:log": "npm audit > ./temp/audit.log",
     "clean:install": "rm -rf ./package-lock.json ./node_modules/",
     "dependency:log": "npm list > ./temp/dependencies.log",
     "docs:clean": "rm -rf ./docs/*",
@@ -16,27 +17,28 @@
     "lint:log": "npm run lint > ./temp/lint-standard.log",
     "lint:standard": "standard --verbose",
     "lint": "npm run lint:standard",
-    "test:clean": "rm -rf .nyc_output/* ./coverage/*",
-    "test:coverage:all": "npm run test:unit --  --cov",
-    "test:coverage": "npm run test:unit -- --cov --coverage-report=html",
-    "test:unit:debug": "tap -T --node-arg=--inspect-brk test/*.test.js",
-    "test:unit:dev": "tap --watch --cov test/*.test.js",
-    "test:unit": "tap test/*.test.js",
+    "test:clean": "rm -rf .nyc_output/* .tap/* ./coverage/*",
+    "test:coverage:all": "npm run test:unit --  --coverage-report=text",
+    "test:coverage": "npm run test:unit -- --coverage-report=html",
+    "test:unit:debug": "tap -T --node-arg=--inspect-brk",
+    "test:unit:dev": "tap --watch --coverage-report=none",
+    "test:unit": "tap --allow-incomplete-coverage",
     "test": "npm run lint && npm run test:unit"
   },
   "dependencies": {
-    "fastify-plugin": "^4.0.0",
-    "check-runtime-env": "~0.4.0"
+    "fastify-plugin": "^5.1.0",
+    "check-runtime-env": "~0.5.0"
   },
   "devDependencies": {
-    "jsdoc": "^3.6.11",
-    "fastify": "^4.0.1",
-    "standard": "^17.0.0",
-    "tap": "^16.3.0"
+    "jsdoc": "^4.0.5",
+    "fastify": "^5.0.0",
+    "standard": "^17.1.2",
+    "tap": "^21.5.1"
   },
   "peerDependencies": {},
+  "type": "commonjs",
   "engines": {
-    "node": ">=14.15.0"
+    "node": ">=20.9.0"
   },
   "homepage": "https://github.com/smartiniOnGitHub/fastify-check-runtime-env#readme",
   "repository": {
