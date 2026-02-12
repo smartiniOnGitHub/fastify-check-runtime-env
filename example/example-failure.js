@@ -33,7 +33,7 @@ fastify.register(require('../src/plugin'), {
   // nodeStrictCheckAtStartup: true, // same as default
   nodeVersionCheckAtStartup: true,
   // nodeVersionExpected: engines.node
-  nodeVersionExpected: '<=14.15.0 >=200.0.0', // sample failing test
+  nodeVersionExpected: '<20.9.0 >=200.0.0', // sample failing test
   // onCheckMismatch: 'warning' // log a warning
   // onCheckMismatch: 'exception' // throw an exception // same as default
   onCheckMismatch: 'exit' // exit the process
