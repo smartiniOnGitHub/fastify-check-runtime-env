@@ -90,6 +90,6 @@ function handleMismatch (e, fastify, mismatchMode) {
 }
 
 module.exports = fp(fastifyCheckRuntimeEnv, {
-  fastify: '4.x',
+  fastify: '5.x',
   name: 'fastify-check-runtime-env'
 })
