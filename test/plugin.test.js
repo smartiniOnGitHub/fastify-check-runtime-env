@@ -28,6 +28,8 @@ assert(engines !== null)
 const plugin = require('../src/plugin')
 assert(plugin !== null)
 
+const failingRange = '<20.9.0 >=200.0.0' // to use in some tests, to ensure failure when expected
+
 test('ensure decorator functions (exposed by the plugin) exists', (t) => {
   const fastify = Fastify()
   t.teardown(() => { fastify.close() })
@@ -119,14 +121,14 @@ test('ensure plugin instancing with node version check works well, to handle fai
   fastify.register(plugin, {
     nodeVersionCheckAtStartup: true,
     // specify a nodeVersionExpected but not satisfied, so exception expected
-    nodeVersionExpected: '<20.9.0 >=200.0.0'
+    nodeVersionExpected: failingRange
   }) // configure this plugin with some custom options
   fastify.after((err) => {
     t.ok(err)
     t.equal(typeof err, 'object')
     t.ok(err.message)
     t.ok(err.message.startsWith('RuntimeEnvChecker - found version'))
-    t.ok(err.message.endsWith('expected version \'<20.9.0 >=200.0.0\''))
+    t.ok(err.message.endsWith('expected version \'' + failingRange + '\''))
   })
   assert(plugin !== null) // to ensure execution flow is right here
 
@@ -172,7 +174,7 @@ test('ensure plugin instancing with node version check (but warnings as outcome)
   fastify.register(plugin, {
     nodeStrictCheckAtStartup: true, // same as default
     nodeVersionCheckAtStartup: true,
-    nodeVersionExpected: '<20.9.0 >=200.0.0',
+    nodeVersionExpected: failingRange,
     onCheckMismatch: 'warning' // log a warning
   }) // configure this plugin with some custom options
   assert(plugin !== null) // to ensure execution flow is right here
@@ -184,7 +186,7 @@ test('ensure plugin instancing with node version check (but warnings as outcome)
     t.comment('testing RuntimeEnvChecker (inner) feature that return a boolean')
     const CRE = fastify.CheckRuntimeEnv
     // t.ok(CRE)
-    const compatible = CRE.isVersionCompatible(nodeVersion, '<20.9.0 >=200.0.0')
+    const compatible = CRE.isVersionCompatible(nodeVersion, failingRange)
     t.strictSame(compatible, false)
 
     // additional tests, to show generic boolean checker usage
