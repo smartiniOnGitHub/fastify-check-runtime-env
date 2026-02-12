@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2023 the original author or authors.
+ * Copyright 2019-2026 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ fastify.register(require('../src/plugin'), {
   // nodeStrictCheckAtStartup: true, // same as default
   nodeVersionCheckAtStartup: true,
   // nodeVersionExpected: engines.node
-  nodeVersionExpected: '<=14.15.0 >=200.0.0', // sample failing test
+  nodeVersionExpected: '<20.9.0 >=200.0.0', // sample failing test
   // onCheckMismatch: 'warning' // log a warning
   // onCheckMismatch: 'exception' // throw an exception // same as default
   onCheckMismatch: 'exit' // exit the process
