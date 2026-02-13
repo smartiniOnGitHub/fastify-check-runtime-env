@@ -1,5 +1,10 @@
 # Change Log
 
+## [5.1.0](https://github.com/smartiniOnGitHub/fastify-check-runtime-env/releases/tag/5.1.0) (2026-02-13)
+[Full Changelog](https://github.com/smartiniOnGitHub/fastify-check-runtime-env/compare/5.0.0...5.1.0)
+Summary Changelog:
+- Use 'check-runtime-env' latest release ('~0.20.0'), refreshed for Node.js 20 LTS
+
 ## [5.0.0](https://github.com/smartiniOnGitHub/fastify-check-runtime-env/releases/tag/5.0.0) (2026-02-12)
 [Full Changelog](https://github.com/smartiniOnGitHub/fastify-check-runtime-env/compare/4.0.1...5.0.0)
 Summary Changelog:

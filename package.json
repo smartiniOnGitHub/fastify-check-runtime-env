@@ -1,6 +1,6 @@
 {
   "name": "fastify-check-runtime-env",
-  "version": "5.0.0",
+  "version": "5.1.0",
   "description": "Fastify Plugin to check runtime environment properties",
   "main": "src/plugin",
   "scripts": {
@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "fastify-plugin": "^5.1.0",
-    "check-runtime-env": "~0.4.0"
+    "check-runtime-env": "~0.20.0"
   },
   "devDependencies": {
     "jsdoc": "^4.0.5",
